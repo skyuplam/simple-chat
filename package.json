@@ -1,0 +1,28 @@
+{
+  "name": "simple-chat",
+  "version": "0.1.0",
+  "description": "A simple chat app",
+  "main": "index.js",
+  "author": "Terrence Lam <skyuplam@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "dependencies": {
+    "@marblejs/core": "^2.3.1",
+    "@marblejs/middleware-body": "^2.3.1",
+    "@marblejs/middleware-logger": "^2.3.1",
+    "@marblejs/websockets": "^2.3.1",
+    "rxjs": "^6.5.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "husky": "^3.0.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}
