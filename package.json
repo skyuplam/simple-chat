@@ -10,7 +10,8 @@
     "lint:tsc": "tsc -p . --noEmit",
     "lint:es": "eslint --ext js,ts,tsx src",
     "lint": "run-p lint:*",
-    "pre-commit": "yarn lint"
+    "pre-commit": "yarn lint",
+    "start": "ts-node ./src/server.ts"
   },
   "husky": {
     "hooks": {
