@@ -11,7 +11,7 @@
     "lint:es": "eslint --ext js,ts,tsx src",
     "lint": "run-p lint:*",
     "pre-commit": "yarn lint",
-    "start:server": "ts-node ./src/server.ts",
+    "start:server": "nodemon ./src/server.ts",
     "start:client": "parcel ./src/html/index.html",
     "start": "run-p start:*"
   },
@@ -20,6 +20,10 @@
       "pre-commit": "yarn pre-commit",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "nodemonConfig": {
+    "ext": "*.ts",
+    "exec": "ts-node"
   },
   "dependencies": {
     "@marblejs/core": "^2.3.1",
@@ -47,6 +51,7 @@
     "eslint-plugin-react": "^7.14.3",
     "husky": "^3.0.2",
     "jest": "^24.8.0",
+    "nodemon": "^1.19.1",
     "npm-run-all": "^4.1.5",
     "parcel-bundler": "^1.12.3",
     "ts-jest": "^24.0.2",
