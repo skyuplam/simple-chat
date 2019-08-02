@@ -36,3 +36,6 @@ rules:
     - error
     - 2
   '@typescript-eslint/explicit-function-return-type': off
+settings:
+  react:
+    version: detect
