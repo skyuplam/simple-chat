@@ -10,7 +10,8 @@
     "paths": {
       "*": ["src/*", "node_modules/*"]
     },
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "jsx": "react"
   },
   "include": [
     "src/**/*"
