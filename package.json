@@ -30,6 +30,8 @@
     "@marblejs/middleware-body": "^2.3.1",
     "@marblejs/middleware-logger": "^2.3.1",
     "@marblejs/websockets": "^2.3.1",
+    "dotenv": "^8.0.0",
+    "lodash": "^4.17.15",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "rxjs": "^6.5.2"
@@ -40,7 +42,9 @@
     "@babel/preset-typescript": "^7.3.3",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
+    "@types/dotenv": "^6.1.1",
     "@types/jest": "^24.0.16",
+    "@types/lodash": "^4.14.136",
     "@types/parcel-bundler": "^1.12.0",
     "@types/react": "^16.8.24",
     "@types/react-dom": "^16.8.5",
