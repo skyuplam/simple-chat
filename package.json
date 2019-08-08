@@ -10,7 +10,8 @@
     "lint:tsc": "tsc -p . --noEmit",
     "lint:es": "eslint --ext js,ts,tsx src",
     "lint": "run-p lint:*",
-    "pre-commit": "yarn lint",
+    "test": "jest",
+    "pre-commit": "yarn lint && yarn test",
     "start:server": "nodemon ./src/server.ts",
     "start:client": "parcel ./src/html/index.html",
     "start": "run-p start:*"
