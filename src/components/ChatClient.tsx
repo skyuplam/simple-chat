@@ -1,9 +1,16 @@
 import * as React from 'react';
+import { Provider } from 'react-redux';
+import store from '../store';
+import Header from './Header';
+import Main from '../containers/Main';
 
 
 function ChatClient() {
   return (
-    <h1>Hello, World!</h1>
+    <Provider store={store}>
+      <Header />
+      <Main />
+    </Provider>
   );
 }
 
