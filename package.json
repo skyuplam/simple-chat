@@ -6,6 +6,11 @@
   "author": "Terrence Lam <skyuplam@gmail.com>",
   "license": "MIT",
   "private": false,
+  "engines": {
+    "node": ">= 8.0.0",
+    "yarn": ">= 1.7.0",
+    "npm": ">= 5.0.0"
+  },
   "scripts": {
     "lint:tsc": "tsc -p . --noEmit",
     "lint:es": "eslint --ext js,ts,tsx src",
