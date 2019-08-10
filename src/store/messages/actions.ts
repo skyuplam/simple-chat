@@ -35,3 +35,8 @@ export const receiveSystemMessage = createAction(
   '@sc/messages/RECEIVE_SYSTEM_MESSAGE',
   action => ({ payload }: ChatSystemEvent) => action(payload),
 );
+
+export const receiveErrorMessage = createAction(
+  '@sc/messages/RECEIVE_ERROR_MESSAGE',
+  action => ({ error }: ChatErrorEvent) => action(error),
+);
