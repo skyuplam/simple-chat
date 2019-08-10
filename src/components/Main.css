@@ -1,0 +1,4 @@
+.MainContent {
+  background-color: #FFF;
+  height: calc(100vh - 10px - 1.5vmin - 2 * 1.625rem - 2 * 1rem - 24px);
+}

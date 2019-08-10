@@ -15,7 +15,16 @@ code {
   monospace;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: normal;
+  margin: 0;
+  line-height: 1;
+}
+
 h1 {
   font-size: calc(10px + 1.5vmin);
-  font-weight: normal;
 }
