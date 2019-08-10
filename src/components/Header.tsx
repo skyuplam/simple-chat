@@ -1,10 +1,13 @@
 import React from 'react';
+import './Header.css';
 
 
 function Header() {
   return (
-    <header>
-      <h1>Status Meeting Standup</h1>
+    <header className="Header">
+      <h1 className="HeaderTitle">
+        Status Meeting Standup
+      </h1>
     </header>
   );
 }
