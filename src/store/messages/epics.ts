@@ -1,32 +1,33 @@
 import { Ep, isActionOf } from 'typesafe-actions';
+import { empty } from 'rxjs';
 import {
   filter, switchMap, map, takeUntil, retryWhen, delay,
 } from 'rxjs/operators';
-import { webSocket } from 'rxjs/webSocket';
 import { ChatEvent } from 'SCModels';
-
+import webSocket from '../../utils/webSocketObservable';
+import webSocketCreator from '../../utils/webSocket';
 import {
   startMessageStream, stopMessageStream,
-  receiveMessage,
-  receiveSystemMessage,
+  receiveMessage, receiveSystemMessage, receiveErrorMessage,
+  sendMessage,
 } from './actions';
 import { API_HOST, API_PORT } from '../../config';
 
+
 const url = ['ws://', API_HOST, ':', API_PORT, '/api/ws'].join('');
-const socket$ = webSocket<ChatEvent>(url);
+const socket$ = webSocket<ChatEvent>({ url, webSocketCreator });
 
 export const messageStreamEpic: Ep = action$ => action$.pipe(
   filter(isActionOf([startMessageStream])),
-  switchMap(({ payload }) => socket$.multiplex(
-    () => ({ type: 'subscribe', payload: payload.user }),
-    () => ({ type: 'unsubscribe', payload: payload.user }),
-    (msg) => Boolean(msg.type),
-  ).pipe(
+  switchMap(() => socket$.pipe(
     map(msg => {
       if (msg.type === 'MESSAGE') {
         return receiveMessage(msg);
       }
-      return receiveSystemMessage(msg);
+      if (msg.type === 'SYSTEM') {
+        return receiveSystemMessage(msg);
+      }
+      return receiveErrorMessage(msg);
     }),
     takeUntil(action$.pipe(filter(isActionOf(stopMessageStream)))),
     retryWhen(error$ => error$.pipe(
@@ -35,10 +36,10 @@ export const messageStreamEpic: Ep = action$ => action$.pipe(
   )),
 );
 
-// export const sendMessageEpic: Ep = action$ => action$.pipe(
-//   filter(isActionOf([sendMessage.request])),
-//   switchMap(() => {
-//     socket$.next({ type: 'HELLO' });
-//     return empty();
-//   }),
-// );
+export const sendMessageEpic: Ep = action$ => action$.pipe(
+  filter(isActionOf([sendMessage.request])),
+  switchMap(({ payload }) => {
+    socket$.next({ type: 'MESSAGE', payload });
+    return empty();
+  }),
+);
