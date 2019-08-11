@@ -6,7 +6,7 @@ import { mergeMap } from 'rxjs/operators';
 import { iif, throwError, of } from 'rxjs';
 
 import { logger$ } from './middlewares/ws.logger';
-import { hello$ } from './effects/hello.ws';
+import * as messages$ from './effects/messages';
 
 
 const connection$: WsConnectionEffect = req$ =>
@@ -22,6 +22,6 @@ const connection$: WsConnectionEffect = req$ =>
 
 export default webSocketListener({
   middlewares: [logger$],
-  effects: [hello$],
+  effects: [...Object.values(messages$)],
   connection$,
 });
