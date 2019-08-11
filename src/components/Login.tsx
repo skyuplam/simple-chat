@@ -1,25 +1,29 @@
 import React from 'react';
 import { Formik, Form, FormikProps, FormikHelpers } from 'formik';
 import { isEmpty, trim, reduce, capitalize } from 'lodash';
+import { Credential } from 'SCModels';
 import Input from './Input';
 import Button from './Button';
 import Modal from './Modal';
 import './Login.css';
 
 
-interface FormValues {
-  name: string;
-  password: string;
+interface Props {
+  isAuthorized: boolean;
+  postSession: (credential: Credential) => void;
 }
-function Login() {
+function Login({
+  isAuthorized, postSession,
+}: Props) {
   function handleOnSubmit(
-    values: FormValues,
-    actions: FormikHelpers<FormValues>,
+    values: Credential,
+    actions: FormikHelpers<Credential>,
   ) {
+    postSession(values);
     actions.setSubmitting(false);
   }
 
-  function handleValidation(values: FormValues) {
+  function handleValidation(values: Credential) {
     return reduce(values, (vals, val, key) => {
       if (!trim(val)) {
         return { ...vals, [key]: `${capitalize(key)} is required!` };
@@ -30,7 +34,7 @@ function Login() {
 
   return (
     <Modal
-      isOpen={true}
+      isOpen={!isAuthorized}
       onRequestClose={() => {}}
     >
       <Formik
@@ -41,7 +45,7 @@ function Login() {
           password: '',
         }}
       >
-        {({ touched, isValid }: FormikProps<FormValues>) => (
+        {({ touched, isValid }: FormikProps<Credential>) => (
           <Form
             className="LoginForm"
           >

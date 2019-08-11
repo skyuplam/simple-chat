@@ -5,7 +5,7 @@ import Tabs from './Tabs';
 import Tab, { TabChangeHandler } from './Tab';
 import Participants from './Participants';
 import Chat from './Chat';
-import Login from './Login';
+import Login from '../containers/Login';
 
 import './Main.css';
 
