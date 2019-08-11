@@ -5,15 +5,18 @@ import { Credential } from 'SCModels';
 import Input from './Input';
 import Button from './Button';
 import Modal from './Modal';
+import Loading from './Loading';
 import './Login.css';
 
 
 interface Props {
   isAuthorized: boolean;
   postSession: (credential: Credential) => void;
+  isLoading: boolean;
+  error: string;
 }
 function Login({
-  isAuthorized, postSession,
+  isAuthorized, postSession, isLoading, error,
 }: Props) {
   function handleOnSubmit(
     values: Credential,
@@ -21,6 +24,7 @@ function Login({
   ) {
     postSession(values);
     actions.setSubmitting(false);
+    actions.resetForm();
   }
 
   function handleValidation(values: Credential) {
@@ -54,6 +58,7 @@ function Login({
             </h2>
             <p>
               Please input your name and password to join the chat.
+              <br />
             </p>
             <Input placeholder="Name" type="text" name="name" />
             <Input placeholder="Password" type="password" name="password" />
@@ -64,8 +69,14 @@ function Login({
                 disabled={isEmpty(touched) || !isValid}
               >
                 Login
+                <Loading isLoading={isLoading} />
               </Button>
             </div>
+            {error && (
+              <p className="LoginError">
+                Error: {error}
+              </p>
+            )}
           </Form>
         )}
       </Formik>

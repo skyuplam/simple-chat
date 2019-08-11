@@ -13,9 +13,18 @@ export const selectToken = createSelector(
   auth => auth.token,
 );
 
-export const selectAuthorized = createSelector(
+export const selectLoading = createSelector(
   selectAuth,
-  auth => Boolean(auth.token && auth.activeUserId),
+  auth => auth.loading,
 );
 
+export const selectAuthError = createSelector(
+  selectAuth,
+  auth => auth.error,
+);
 
+export const selectAuthorized = createSelector(
+  selectActiveUserId,
+  selectToken,
+  (activeUserId, token) => Boolean(token && activeUserId),
+);

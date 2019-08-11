@@ -4,12 +4,16 @@ import { Dispatch } from 'redux';
 import { RootState } from 'typesafe-actions';
 import { Credential } from 'SCModels';
 import Login from '../components/Login';
-import { selectAuthorized } from '../store/auth/selectors';
+import {
+  selectAuthorized, selectLoading, selectAuthError,
+} from '../store/auth/selectors';
 import { createSession } from '../store/auth/actions';
 
 
 const mapStateToProps = (state: RootState) => ({
   isAuthorized: selectAuthorized(state),
+  isLoading: selectLoading(state),
+  error: selectAuthError(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

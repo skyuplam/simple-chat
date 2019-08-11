@@ -10,3 +10,8 @@
   text-align: right;
   margin: 1rem 0;
 }
+
+.LoginError {
+  color: #ff5252;
+  text-align: center;
+}
