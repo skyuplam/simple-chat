@@ -1,16 +1,17 @@
 import { Ep, isActionOf } from 'typesafe-actions';
 import { empty } from 'rxjs';
 import {
-  filter, switchMap, map, takeUntil, retryWhen, delay,
+  filter, switchMap, map, takeUntil, retryWhen, delay, tap,
 } from 'rxjs/operators';
-import { ChatEvent } from 'SCModels';
+import { ChatEvent, User } from 'SCModels';
 import webSocket from '../../utils/webSocketObservable';
 import webSocketCreator from '../../utils/webSocket';
 import {
-  startMessageStream, stopMessageStream,
+  stopMessageStream,
   receiveMessage, receiveSystemMessage, receiveErrorMessage,
   sendMessage,
 } from './actions';
+import { createSession } from '../auth/actions';
 import { API_HOST, API_PORT } from '../../config';
 
 
@@ -18,22 +19,42 @@ const url = ['ws://', API_HOST, ':', API_PORT, '/api/ws'].join('');
 const socket$ = webSocket<ChatEvent>({ url, webSocketCreator });
 
 export const messageStreamEpic: Ep = action$ => action$.pipe(
-  filter(isActionOf([startMessageStream])),
+  filter(isActionOf([createSession.success])),
   switchMap(() => socket$.pipe(
+    tap(console.log),
     map(msg => {
       if (msg.type === 'MESSAGE') {
         return receiveMessage(msg);
       }
-      if (msg.type === 'SYSTEM') {
-        return receiveSystemMessage(msg);
+      if (msg.type === 'ERROR') {
+        return receiveErrorMessage(msg);
       }
-      return receiveErrorMessage(msg);
+      return receiveSystemMessage(msg);
     }),
     takeUntil(action$.pipe(filter(isActionOf(stopMessageStream)))),
     retryWhen(error$ => error$.pipe(
       delay(1000),
     )),
   )),
+);
+
+export const sendSubscribeMsg: Ep = action$ => action$.pipe(
+  filter(isActionOf([createSession.success])),
+  delay(1000),
+  switchMap((action) => {
+    const { payload: { payload } } = action;
+    const { token, user } = payload as { token: string; user: User };
+    const now = new Date();
+    socket$.next({
+      type: 'SUBSCRIPTION',
+      payload: {
+        token,
+        user,
+        createdAt: now.toISOString(),
+      },
+    });
+    return empty();
+  }),
 );
 
 export const sendMessageEpic: Ep = action$ => action$.pipe(

@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'SCModels' {
-  export type UserStatus = 'online' | 'offline';
   export interface User {
     id: string;
     name: string;
-    status?: UserStatus;
+    online?: boolean;
   }
   export interface Meta {
     createdAt: string;
@@ -30,10 +29,20 @@ declare module 'SCModels' {
     type: 'MESSAGE';
     payload: Message;
   }
-  export interface ChatSystemEvent {
+  export interface ChatSystemMessageEvent {
     type: 'SYSTEM';
     payload: SystemMessage;
   }
+  export interface ChatSubscriptionEvent {
+    type: 'SUBSCRIPTION';
+    payload: { token: string; user: User; createdAt: string };
+  }
+  export interface ChatUnsubscriptionEvent {
+    type: 'UNSUBSCRIPTION';
+    payload: { token: string; user: User; createdAt: string };
+  }
+  export type ChatSystemEvent = ChatSystemMessageEvent | ChatSubscriptionEvent
+  | ChatUnsubscriptionEvent;
   export interface Error {
     message: string;
     code: string;
