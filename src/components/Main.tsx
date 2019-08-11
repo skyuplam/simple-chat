@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { map, head } from 'lodash';
-import { User } from 'SCModels';
 import Tabs from './Tabs';
 import Tab, { TabChangeHandler } from './Tab';
-import Participants from './Participants';
+import Participants from '../containers/Participants';
 import Chat from './Chat';
 import Login from '../containers/Login';
 
@@ -11,19 +10,18 @@ import './Main.css';
 
 
 interface Props {
-  startStream: (user: User) => void;
+  userCount: number;
 }
-function Main({ startStream }: Props) {
+function Main({ userCount }: Props) {
   const tabs = {
-    participants: { label: 'Participants', value: 'participants' },
+    participants: {
+      label: `Participants (${userCount})`,
+      value: 'participants',
+    },
     chat: { label: 'Chat', value: 'chat' },
   };
 
   const [tab, setTab] = useState(tabs.participants.value);
-
-  useEffect(() => {
-    startStream({ id: 'test@sc.org', name: 'Elon Musk' });
-  }, []);
 
   const handleTabChange: TabChangeHandler = (_, val) => {
     setTab(val as string);
