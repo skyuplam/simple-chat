@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'SCModels' {
   export type UserStatus = 'online' | 'offline';
   export interface User {
@@ -42,4 +43,17 @@ declare module 'SCModels' {
     error: Error;
   }
   export type ChatEvent = ChatMessageEvent | ChatSystemEvent | ChatErrorEvent;
+  export interface Credential {
+    name: string;
+    password: string;
+  }
+  export interface FetchResponse {
+    meta?: Record<string, any>;
+  }
+  export interface FetchSuccess extends FetchResponse {
+    payload: Record<string, any>;
+  }
+  export interface FetchFailure extends FetchResponse {
+    error: Record<string, any>;
+  }
 }
