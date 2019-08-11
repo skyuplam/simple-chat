@@ -1,0 +1,42 @@
+.InputBase {
+  font: inherit;
+  color: currentColor;
+  width: 100%;
+  border: 0;
+  height: 1.1875em;
+  margin: 0;
+  display: block;
+  padding: 10px;
+  padding-right: 0px;
+  min-width: 0;
+  background: none;
+  box-sizing: content-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.InputBase:focus {
+  outline: none;
+}
+
+.InputContainer {
+  color: currentColor;
+  cursor: text;
+  display: inline-flex;
+  position: relative;
+  font-size: inherit;
+  box-sizing: border-box;
+  align-items: center;
+  line-height: 1.1875em;
+  border: 1px solid #999fa9;
+  border-radius: 4px;
+  transition: border-color 200ms ease-in;
+  width: 100%;
+}
+
+.InputFocused {
+  border-color: #253449;
+}
+
+.InputErrorContainer {
+  color: #ff5252;
+}

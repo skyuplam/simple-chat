@@ -1,0 +1,12 @@
+.LoginForm {
+  padding: 2rem 1rem;
+}
+
+.LoginForm .InputRoot {
+  margin: 1rem 0;
+}
+
+.LoginFormGroup {
+  text-align: right;
+  margin: 1rem 0;
+}

@@ -5,6 +5,7 @@ import Tabs from './Tabs';
 import Tab, { TabChangeHandler } from './Tab';
 import Participants from './Participants';
 import Chat from './Chat';
+import Login from './Login';
 
 import './Main.css';
 
@@ -47,6 +48,7 @@ function Main({ startStream }: Props) {
       >
         {content}
       </div>
+      <Login />
     </main>
   );
 }
