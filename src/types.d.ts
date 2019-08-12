@@ -11,6 +11,7 @@ declare module 'SCModels' {
   export interface MessageMeta extends Meta {
     editedAt?: string;
     userId: string;
+    user?: User;
   }
   export interface SystemMessageMeta extends Meta {
     users: User[];
