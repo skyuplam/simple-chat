@@ -3,8 +3,7 @@
   height: 100%;
 }
 
-.ChatInput {
-  position: fixed;
-  bottom: 0;
-  width: calc(100% - 2rem);
+.ChatMessages {
+  height: calc(100% - 73px + 1rem);
+  overflow: scroll;
 }

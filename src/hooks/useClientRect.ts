@@ -2,7 +2,8 @@
 import { useState, useCallback, Ref } from 'react';
 
 
-function useClientRect<T extends HTMLElement>(): [DOMRect | ClientRect | void, Ref<T>] {
+type RectRef<T> = [DOMRect | ClientRect | void, Ref<T>]
+function useClientRect<T extends HTMLElement>(): RectRef<T> {
   const [rect, setRect] = useState<DOMRect | ClientRect>();
   const ref = useCallback((node: T) => {
     if (node) {

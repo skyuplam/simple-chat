@@ -781,19 +781,19 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-transform-typescript" "^7.3.2"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.4.5":
-  version "7.5.5"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
-  integrity sha512-28QvEGyQyNkB0/m2B4FU7IEZGK2NUrcMtT6BZEFALTguLk+AUT6ofsHtPk5QyjAdUkpMJ+/Em+quwz4HOt30AQ==
-  dependencies:
-    regenerator-runtime "^0.13.2"
-
 "@babel/runtime@^7.0.0 <7.4.0":
   version "7.3.4"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.3.4.tgz#73d12ba819e365fcf7fd152aed56d6df97d21c83"
   integrity sha512-IvfvnMdSaLBateu0jfsYIpZTxAc2cKEXEMiezGGN75QcBcecDUKd3PgLAncT0oOgxKy8dd8hrJKj9MfzgfZd6g==
   dependencies:
     regenerator-runtime "^0.12.0"
+
+"@babel/runtime@^7.4.5":
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
+  integrity sha512-28QvEGyQyNkB0/m2B4FU7IEZGK2NUrcMtT6BZEFALTguLk+AUT6ofsHtPk5QyjAdUkpMJ+/Em+quwz4HOt30AQ==
+  dependencies:
+    regenerator-runtime "^0.13.2"
 
 "@babel/template@^7.0.0 <7.4.0":
   version "7.2.2"
@@ -1452,13 +1452,6 @@
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
     redux "^4.0.0"
-
-"@types/react-window@^1.8.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@types/react-window/-/react-window-1.8.1.tgz#6e1ceab2e6f2f78dbf1f774ee0e00f1bb0364bb3"
-  integrity sha512-V3k1O5cbfZIRa0VVbQ81Ekq/7w42CK1SuiB9U1oPMTxv270D9qUn7rHb3sZoqMkIJFfB1NZxaH7NRDlk+ToDsg==
-  dependencies:
-    "@types/react" "*"
 
 "@types/react@*", "@types/react@16.8.24":
   version "16.8.24"
@@ -5532,11 +5525,6 @@ mem@^4.0.0:
     mimic-fn "^2.0.0"
     p-is-promise "^2.0.0"
 
-"memoize-one@>=3.1.1 <6":
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.0.5.tgz#8cd3809555723a07684afafcd6f756072ac75d7e"
-  integrity sha512-ey6EpYv0tEaIbM/nTDOpHciXUvd+ackQrJgEzBwemhZZIWZjcyodqEcrmqDy2BKRTM3a65kKBV4WtLXJDt26SQ==
-
 memorystream@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/memorystream/-/memorystream-0.3.1.tgz#86d7090b30ce455d63fbae12dda51a47ddcaf9b2"
@@ -7144,14 +7132,6 @@ react-redux@^7.1.0:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-is "^16.8.6"
-
-react-window@^1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/react-window/-/react-window-1.8.5.tgz#a56b39307e79979721021f5d06a67742ecca52d1"
-  integrity sha512-HeTwlNa37AFa8MDZFZOKcNEkuF2YflA0hpGPiTT9vR7OawEt+GZbfM6wqkBahD3D3pUjIabQYzsnY/BSJbgq6Q==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    memoize-one ">=3.1.1 <6"
 
 react@^16.8.6:
   version "16.8.6"
