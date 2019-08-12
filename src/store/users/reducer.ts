@@ -22,7 +22,7 @@ const usersReducer = createReducer(initialUserState)
       return reduce(users, (us, u) => ({
         ...us,
         [u.id]: u,
-      }), {});
+      }), state);
     }),
   );
 
