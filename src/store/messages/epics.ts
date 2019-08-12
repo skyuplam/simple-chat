@@ -1,7 +1,7 @@
 import { Ep, isActionOf } from 'typesafe-actions';
 import { empty } from 'rxjs';
 import {
-  filter, switchMap, map, takeUntil, retryWhen, delay, tap,
+  filter, switchMap, map, takeUntil, retryWhen, delay, tap, withLatestFrom,
 } from 'rxjs/operators';
 import { ChatEvent, User } from 'SCModels';
 import webSocket from '../../utils/webSocketObservable';
@@ -13,6 +13,7 @@ import {
 } from './actions';
 import { createSession } from '../auth/actions';
 import { API_HOST, API_PORT } from '../../config';
+import { selectMessageToSend } from './selectors';
 
 
 const url = ['ws://', API_HOST, ':', API_PORT, '/api/ws'].join('');
@@ -57,10 +58,15 @@ export const sendSubscribeMsg: Ep = action$ => action$.pipe(
   }),
 );
 
-export const sendMessageEpic: Ep = action$ => action$.pipe(
-  filter(isActionOf([sendMessage.request])),
-  switchMap(({ payload }) => {
-    socket$.next({ type: 'MESSAGE', payload });
+export const sendMessageEpic: Ep = (action$, state$) => action$.pipe(
+  filter(isActionOf([sendMessage])),
+  withLatestFrom(state$),
+  switchMap(([action, state]) => {
+    const { payload } = action;
+    socket$.next({
+      type: 'MESSAGE',
+      payload: selectMessageToSend(payload)(state),
+    });
     return empty();
   }),
 );

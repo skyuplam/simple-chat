@@ -1,15 +1,13 @@
-import { createAsyncAction, createAction } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
 import {
-  Message, ChatMessageEvent, ChatSystemEvent, ChatErrorEvent, User,
+  ChatMessageEvent, ChatSystemEvent, ChatErrorEvent, User,
 } from 'SCModels';
 
 
-export const sendMessage = createAsyncAction(
-  '@sc/messages/SEND_MESSAGE_REQUEST',
-  '@sc/messages/SEND_MESSAGE_SUCCESS',
-  '@sc/messages/SEND_MESSAGE_FAILURE',
-  '@sc/messages/SEND_MESSAGE_CANCEL',
-)<Message, undefined, undefined, undefined>();
+export const sendMessage = createAction(
+  '@sc/messages/SEND_MESSAGE',
+  action => (msg: string) => action(msg),
+);
 
 export const startMessageStream = createAction(
   '@sc/messages/START_MESSAGE_STREAM',

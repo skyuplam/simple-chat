@@ -1,0 +1,23 @@
+.DialogContainer {
+  margin-bottom: 1rem;
+}
+
+.DialogContent {
+  margin: 0.2rem 0;
+}
+
+.DialogHeading {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.Datetime {
+  color: #959ba4;
+  font-size: 1rem;
+  margin: 0 0.5rem;
+  font-weight: normal;
+}
+
+.DialogBOT {
+  color: #959ba4;
+}

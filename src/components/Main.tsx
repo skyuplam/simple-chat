@@ -3,7 +3,7 @@ import { map, head } from 'lodash';
 import Tabs from './Tabs';
 import Tab, { TabChangeHandler } from './Tab';
 import Participants from '../containers/Participants';
-import Chat from './Chat';
+import Chat from '../containers/Chat';
 import Login from '../containers/Login';
 
 import './Main.css';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import cn from 'clsx';
 import { useField } from 'formik';
 import './Input.css';
@@ -10,9 +10,10 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   id?: string;
   name: string;
   onChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  endAdornment?: ReactNode;
 }
 function Input({
-  className, label, id, name, onChange, disabled, ...rest
+  className, label, id, name, onChange, disabled, endAdornment, ...rest
 }: Props) {
   const [field, meta] = useField(name);
   const [focused, setFocused] = useState(false);
@@ -64,6 +65,11 @@ function Input({
           disabled={disabled}
           {...restField}
         />
+        {endAdornment && (
+          <div className="InputEndAdorment">
+            {endAdornment}
+          </div>
+        )}
       </div>
       {ErrorMsg}
     </div>
