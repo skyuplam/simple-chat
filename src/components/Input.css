@@ -18,6 +18,12 @@
   outline: none;
 }
 
+.InputBase[disabled] {
+  opacity: 0.26;
+  cursor: default;
+  pointer-events: none;
+}
+
 .InputContainer {
   color: currentColor;
   cursor: text;
@@ -39,4 +45,8 @@
 
 .InputErrorContainer {
   color: #ff5252;
+}
+
+.InputDisabled {
+  opacity: 0.5;
 }

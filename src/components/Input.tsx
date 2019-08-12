@@ -12,7 +12,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   onChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 }
 function Input({
-  className, label, id, name, onChange, ...rest
+  className, label, id, name, onChange, disabled, ...rest
 }: Props) {
   const [field, meta] = useField(name);
   const [focused, setFocused] = useState(false);
@@ -43,7 +43,7 @@ function Input({
   }
 
   return (
-    <div className={cn('InputRoot', className)}>
+    <div className={cn('InputRoot', { InputDisabled: disabled }, className)}>
       <div className="InputLabelContainer">
         <label className="InputLabel" htmlFor={id || name}>
           {label}
@@ -61,6 +61,7 @@ function Input({
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
           onChange={handleOnChange}
+          disabled={disabled}
           {...restField}
         />
       </div>
