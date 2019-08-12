@@ -9,7 +9,7 @@ export interface User {
   online: boolean;
 }
 
-export function findUserByName(name: string) {
+export function findUserByName(name?: string) {
   return find(users, user => user.name === name);
 }
 

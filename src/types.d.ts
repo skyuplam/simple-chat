@@ -54,7 +54,6 @@ declare module 'SCModels' {
   export type ChatEvent = ChatMessageEvent | ChatSystemEvent | ChatErrorEvent;
   export interface Credential {
     name: string;
-    password: string;
   }
   export interface FetchResponse {
     meta?: Record<string, any>;

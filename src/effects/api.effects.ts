@@ -2,7 +2,7 @@ import { r, HttpError, HttpStatus, combineRoutes } from '@marblejs/core';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { generateTokenPayload } from '../tokens';
 import { throwError, iif, of } from 'rxjs';
-import { isAuthorized, findUserByName } from '../utils/dbHelpers';
+import { isAuthorized, findUserByName, User } from '../utils/dbHelpers';
 
 
 const sessions$ = r.pipe(
@@ -10,11 +10,12 @@ const sessions$ = r.pipe(
   r.matchType('POST'),
   r.useEffect(req$ => req$.pipe(
     map(req => {
-      const { name, password } = req.body as {
-        name: string; password: string;
+      const { name } = req.body as {
+        name: string;
       };
       const { origin } = req.headers;
-      return { name, password, origin };
+      const user = findUserByName(name) as User;
+      return { ...user, origin };
     }),
     switchMap(payload => iif(
       () => !isAuthorized(payload),
@@ -25,8 +26,7 @@ const sessions$ = r.pipe(
     )),
     map(payload => {
       const token = generateTokenPayload(payload);
-      const user = findUserByName(payload.name);
-      return { token, user };
+      return { token, user: payload };
     }),
     map(body => ({
       headers: { 'Content-Type': 'application/json' },

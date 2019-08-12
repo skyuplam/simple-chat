@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form, FormikProps, FormikHelpers } from 'formik';
-import { isEmpty, trim, reduce, capitalize } from 'lodash';
+import { trim, reduce, capitalize } from 'lodash';
 import { Credential } from 'SCModels';
 import Input from './Input';
 import Button from './Button';
@@ -23,7 +23,6 @@ function Login({
     actions: FormikHelpers<Credential>,
   ) {
     postSession(values);
-    actions.setSubmitting(false);
     actions.resetForm();
   }
 
@@ -46,10 +45,10 @@ function Login({
         validate={handleValidation}
         initialValues={{
           name: '',
-          password: '',
         }}
+        validateOnChange
       >
-        {({ touched, isValid }: FormikProps<Credential>) => (
+        {({ isValid }: FormikProps<Credential>) => (
           <Form
             className="LoginForm"
           >
@@ -57,16 +56,19 @@ function Login({
               Login
             </h2>
             <p>
-              Please input your name and password to join the chat.
-              <br />
+              Please input your name to join the chat.
             </p>
-            <Input placeholder="Name" type="text" name="name" />
-            <Input placeholder="Password" type="password" name="password" />
+            <Input
+              placeholder="Name"
+              type="text"
+              name="name"
+              disabled={isLoading}
+            />
             <div className="LoginFormGroup">
               <Button
                 type="submit"
                 primary
-                disabled={isEmpty(touched) || !isValid}
+                disabled={isLoading || !isValid}
               >
                 Login
                 <Loading isLoading={isLoading} />

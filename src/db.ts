@@ -3,7 +3,6 @@ const db = {
     user0001: {
       id: 'user0001',
       name: 'Elon Musk',
-      password: '',
       online: false,
     },
     user0002: {
