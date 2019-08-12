@@ -21,6 +21,6 @@ export function getUsers() {
   return map(users);
 }
 
-export function toggleUserOnline(userId: keyof Users) {
-  users[userId].online = !users[userId].online;
+export function setUserOnline(userId: keyof Users, online: boolean) {
+  users[userId].online = online;
 }

@@ -2,7 +2,7 @@ import { WsEffect, broadcast } from '@marblejs/websockets';
 import { matchEvent } from '@marblejs/core';
 import cuid from 'cuid';
 import {
-  getUsers, toggleUserOnline, User,
+  getUsers, setUserOnline, User,
 } from '../utils/dbHelpers';
 
 
@@ -38,8 +38,10 @@ export const subscription$: WsEffect = (event$, client$) =>
     matchEvent('SUBSCRIPTION'),
     broadcast(client$, (event) => {
       const { user: { name, id: userId } } = event.payload as { user: User };
-      toggleUserOnline(userId);
-      return subscriptionMsg(name);
+      setUserOnline(userId, true);
+      const msg = subscriptionMsg(name);
+      // TODO: Cache the message
+      return msg;
     }),
   );
 
@@ -48,7 +50,8 @@ export const unsubscription$: WsEffect = (event$, client$) =>
     matchEvent('UNSUBSCRIPTION'),
     broadcast(client$, (event) => {
       const { user: { name, id: userId } } = event.payload as { user: User };
-      toggleUserOnline(userId);
-      return unsubscriptionMsg(name);
-    }),
+      setUserOnline(userId, false);
+      const msg = unsubscriptionMsg(name);
+      // TODO: Cache the message
+      return msg; }),
   );
