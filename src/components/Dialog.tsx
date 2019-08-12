@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Message } from 'SCModels';
 import dayjs from 'dayjs';
 import cn from 'clsx';
@@ -10,6 +10,16 @@ interface Props {
   style?: React.CSSProperties;
 }
 function Dialog({ msg, style }: Props) {
+  const ref = useRef<HTMLElement>(null);
+
+  // Scroll into this view when mounted
+  useEffect(() => {
+    if (ref !== null) {
+      const article = ref.current as HTMLDivElement;
+      article.scrollIntoView();
+    }
+  }, []);
+
   const datetime = dayjs(msg.meta.editedAt || msg.meta.createdAt);
   // Check if the msg is created at the current day
   // Prepend with date, e.g. 8-13 12:03, otherwise only show the time
@@ -17,7 +27,7 @@ function Dialog({ msg, style }: Props) {
   const isSystem = msg.meta.userId === 'user0000';
 
   return (
-    <article key={msg.id} style={style} className="DialogContainer">
+    <article ref={ref} key={msg.id} style={style} className="DialogContainer">
       <h3 className="DialogHeading">
         {msg.meta.user && msg.meta.user.name}
         <span className="Datetime">

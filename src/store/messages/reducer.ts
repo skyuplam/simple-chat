@@ -1,7 +1,7 @@
 import { createReducer } from 'typesafe-actions';
 import produce from 'immer';
 import { Message, SystemMessage } from 'SCModels';
-import { receiveSystemMessage } from './actions';
+import { receiveSystemMessage, receiveMessage } from './actions';
 
 
 type Messages = Record<string, Message>;
@@ -26,6 +26,12 @@ const messagesReducer = createReducer(initialMessagesState)
       const { payload } = action;
       const message = payload as SystemMessage;
       draft[message.id] = systemToMessage(message);
+    }),
+  ).handleAction(
+    receiveMessage,
+    (state, action) => produce(state, draft => {
+      const { payload } = action;
+      draft[payload.id] = payload;
     }),
   );
 

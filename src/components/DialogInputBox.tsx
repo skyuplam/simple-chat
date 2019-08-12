@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, Form, FormikProps } from 'formik';
+import { Formik, Form, FormikProps, FormikHelpers } from 'formik';
 import { mdiKeyboardReturn } from '@mdi/js';
 import Icon from '@mdi/react';
 import Input from './Input';
@@ -16,8 +16,12 @@ interface Props {
 function DialogInputBox({
   onSend,
 }: Props) {
-  function handleOnSubmit(values: FormValues) {
+  function handleOnSubmit(
+    values: FormValues,
+    actions: FormikHelpers<FormValues>,
+  ) {
     onSend(values.content);
+    actions.resetForm();
   }
   return (
     <div className="DialogInputBox">
