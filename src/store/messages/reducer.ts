@@ -14,7 +14,7 @@ const systemToMessage = (msg: SystemMessage) => {
     content,
     meta: {
       createdAt: meta.createdAt,
-      userId: 'BOT',
+      userId: 'user0000',
     }
   };
 };
