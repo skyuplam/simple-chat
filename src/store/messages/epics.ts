@@ -1,7 +1,7 @@
 import { Ep, isActionOf } from 'typesafe-actions';
 import { empty } from 'rxjs';
 import {
-  filter, switchMap, map, takeUntil, retryWhen, delay, tap, withLatestFrom,
+  filter, switchMap, map, takeUntil, retryWhen, delay, withLatestFrom,
 } from 'rxjs/operators';
 import { ChatEvent, User } from 'SCModels';
 import webSocket from '../../utils/webSocketObservable';
@@ -11,7 +11,7 @@ import {
   receiveMessage, receiveSystemMessage, receiveErrorMessage,
   sendMessage,
 } from './actions';
-import { createSession } from '../auth/actions';
+import { createSession, validateSession } from '../auth/actions';
 import { API_HOST, API_PORT } from '../../config';
 import { selectMessageToSend } from './selectors';
 
@@ -20,9 +20,8 @@ const url = ['ws://', API_HOST, ':', API_PORT, '/api/ws'].join('');
 const socket$ = webSocket<ChatEvent>({ url, webSocketCreator });
 
 export const messageStreamEpic: Ep = action$ => action$.pipe(
-  filter(isActionOf([createSession.success])),
+  filter(isActionOf([createSession.success, validateSession.success])),
   switchMap(() => socket$.pipe(
-    tap(console.log),
     map(msg => {
       if (msg.type === 'MESSAGE') {
         return receiveMessage(msg);
@@ -40,7 +39,7 @@ export const messageStreamEpic: Ep = action$ => action$.pipe(
 );
 
 export const sendSubscribeMsg: Ep = action$ => action$.pipe(
-  filter(isActionOf([createSession.success])),
+  filter(isActionOf([createSession.success, validateSession.success])),
   delay(1000),
   switchMap((action) => {
     const { payload: { payload } } = action;

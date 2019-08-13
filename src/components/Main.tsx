@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { map, head } from 'lodash';
 import Tabs from './Tabs';
 import Tab, { TabChangeHandler } from './Tab';
@@ -11,8 +11,16 @@ import './Main.css';
 
 interface Props {
   userCount: number;
+  loadCookie: () => void;
 }
-function Main({ userCount }: Props) {
+function Main({ userCount, loadCookie }: Props) {
+  useEffect(() => {
+    // Load cookie if exist
+    if (typeof document !== 'undefined' && document.cookie) {
+      loadCookie();
+    }
+  }, []);
+
   const tabs = {
     participants: {
       label: `Participants (${userCount})`,

@@ -1,6 +1,6 @@
 import { createReducer } from 'typesafe-actions';
 import produce from 'immer';
-import { createSession } from './actions';
+import { createSession, loadCookie, validateSession } from './actions';
 
 
 const initialState = {
@@ -17,7 +17,7 @@ const authReducer = createReducer(initialState)
       return { ...initialState, loading: true };
     }),
   ).handleAction(
-    createSession.success,
+    [createSession.success, validateSession.success],
     (state, action) => produce(state, draft => {
       const { payload: { payload: { token, user } } } = action;
       draft.token = token;
@@ -33,6 +33,14 @@ const authReducer = createReducer(initialState)
         error: message,
       };
     }),
+  ).handleAction(
+    loadCookie.success,
+    (state, action) => produce(state, draft => {
+      draft.token = action.payload;
+    }),
+  ).handleAction(
+    validateSession.failure,
+    () => initialState,
   );
 
 export default authReducer;

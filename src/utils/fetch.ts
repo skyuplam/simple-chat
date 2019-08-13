@@ -25,17 +25,8 @@ export async function parseResponse(response: Response) {
 
 async function fetchAPI(
   url: string | Request,
-  options: RequestInit = {},
+  opts: RequestInit = {},
 ) {
-  const { headers, ...rest } = options;
-  const opts = {
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    },
-    ...rest,
-  };
-
   const response = await fetch(url, opts);
 
   const meta = {

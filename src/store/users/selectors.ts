@@ -1,13 +1,13 @@
 import { RootState } from 'typesafe-actions';
 import { createSelector } from 'reselect';
-import { map, size } from 'lodash';
+import { map, size, max } from 'lodash';
 
 
 export const selectUsers = (state: RootState) => state.users;
 
 export const selectUserCount = createSelector(
   selectUsers,
-  users => size(users) - 1,
+  users => max([size(users) - 1, 0]) as number, // exclude BOT
 );
 
 export const selectOnlineUsers = createSelector(
