@@ -1,6 +1,6 @@
 import React from 'react';
 import { Message } from 'SCModels';
-import Dialog from './Dialog';
+import Dialog from '../containers/Dialog';
 import DialogInputBox from '../containers/DialogInputBox';
 import './Chat.css';
 

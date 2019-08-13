@@ -12,10 +12,13 @@ export const selectMessages = (state: RootState) => state.messages;
 export const selectOrderedMessages = createSelector(
   selectMessages,
   selectUsers,
-  (msgs, users) => map(
+  selectActiveUserId,
+  (msgs, users, activeUserId) => map(
     orderBy(msgs, 'meta.date'),
     msg => ({
       ...msg,
+      isBOT: msg.meta.userId === 'user0000',
+      isEditable: msg.meta.userId === activeUserId,
       meta: { ...msg.meta, user: get(users, msg.meta.userId) },
     }),
   ),

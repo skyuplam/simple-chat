@@ -10,6 +10,13 @@ export const createSession = createAsyncAction(
   '@sc/auth/CREATE_SESSION_CANCEL',
 )<Credential, FetchSuccess, FetchFailure, undefined>();
 
+export const storeCookie = createAsyncAction(
+  '@sc/auth/STORE_COOKIE_REQUEST',
+  '@sc/auth/STORE_COOKIE_SUCCESS',
+  '@sc/auth/STORE_COOKIE_FAILURE',
+  '@sc/auth/STORE_COOKIE_CANCEL',
+)<undefined, undefined, undefined, undefined>();
+
 export const loadCookie = createAsyncAction(
   '@sc/auth/LOAD_COOKIE_REQUEST',
   '@sc/auth/LOAD_COOKIE_SUCCESS',

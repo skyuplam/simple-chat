@@ -1,9 +1,9 @@
 import { Ep, isActionOf } from 'typesafe-actions';
 import {
-  filter, switchMap, map, catchError, takeUntil, flatMap,
+  filter, switchMap, map, catchError, takeUntil, flatMap, mapTo,
 } from 'rxjs/operators';
 import { from, of, empty } from 'rxjs';
-import { createSession, loadCookie, validateSession } from './actions';
+import { createSession, loadCookie, validateSession, storeCookie } from './actions';
 import { createCookiesStorage } from '../../utils/persistence';
 import { COOKIE_KEY } from '../../config';
 
@@ -24,9 +24,11 @@ export const storeCookieFlow: Ep = action$ => action$.pipe(
   filter(isActionOf(createSession.success)),
   switchMap(action => {
     const { payload: { payload: { token } } } = action;
-    return from(cookies.setItem(COOKIE_KEY, token));
+    return from(cookies.setItem(COOKIE_KEY, token)).pipe(
+      mapTo(storeCookie.success()),
+      catchError(() => of(storeCookie.failure())),
+    );
   }),
-  switchMap(() => empty()),
 );
 
 // Load cookie token from cookie storage

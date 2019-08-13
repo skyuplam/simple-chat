@@ -1,9 +1,16 @@
 .DialogContainer {
   margin-bottom: 1rem;
+  margin-right: 0.8rem;
 }
 
 .DialogContent {
   margin: 0.2rem 0;
+}
+
+.DialogHeadingContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .DialogHeading {
@@ -20,4 +27,16 @@
 
 .DialogBOT {
   color: #959ba4;
+}
+
+.DialogIconBtn {
+  padding: 0;
+  font-weight: normal;
+  min-width: 0;
+  margin: 0 0.2rem;
+}
+
+.DialogEditBtn:hover,
+.DialogEditBtn:focus {
+  box-shadow: none;
 }

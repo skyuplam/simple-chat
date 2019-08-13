@@ -1,0 +1,28 @@
+.TextArea {
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.TextAreaInput {
+  width: 100%;
+  border: none;
+  border: 1px solid #999fa9;
+  border-radius: 4px;
+  -webkit-tap-highlight-color: transparent;
+  background: none;
+  padding: 10px;
+}
+
+.TextAreaInput:focus {
+  outline: none;
+}
+
+.TextAreaInput[disabled] {
+  opacity: 0.26;
+  cursor: default;
+  pointer-events: none;
+}
+
+.TextAreaError {
+  color: #ff5252;
+}

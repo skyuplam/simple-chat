@@ -1,12 +1,22 @@
 import { createAction } from 'typesafe-actions';
 import {
-  ChatMessageEvent, ChatSystemEvent, ChatErrorEvent, User,
+  ChatMessageEvent, ChatSystemEvent, ChatErrorEvent, User, Message,
 } from 'SCModels';
 
 
 export const sendMessage = createAction(
   '@sc/messages/SEND_MESSAGE',
   action => (msg: string) => action(msg),
+);
+
+export const editMessage = createAction(
+  '@sc/messages/EDIT_MESSAGE',
+  action => (msg: Message) => action(msg),
+);
+
+export const sendEditedMessage = createAction(
+  '@sc/messages/SEND_EDITED_MESSAGE',
+  action => (msg: Message) => action(msg),
 );
 
 export const startMessageStream = createAction(

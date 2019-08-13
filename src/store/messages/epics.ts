@@ -10,8 +10,9 @@ import {
   stopMessageStream,
   receiveMessage, receiveSystemMessage, receiveErrorMessage,
   sendMessage,
+  sendEditedMessage,
 } from './actions';
-import { createSession, validateSession } from '../auth/actions';
+import { createSession, validateSession, storeCookie } from '../auth/actions';
 import { API_HOST, API_PORT } from '../../config';
 import { selectMessageToSend } from './selectors';
 
@@ -20,7 +21,7 @@ const url = ['ws://', API_HOST, ':', API_PORT, '/api/ws'].join('');
 const socket$ = webSocket<ChatEvent>({ url, webSocketCreator });
 
 export const messageStreamEpic: Ep = action$ => action$.pipe(
-  filter(isActionOf([createSession.success, validateSession.success])),
+  filter(isActionOf([storeCookie.success, validateSession.success])),
   switchMap(() => socket$.pipe(
     map(msg => {
       if (msg.type === 'MESSAGE') {
@@ -44,14 +45,10 @@ export const sendSubscribeMsg: Ep = action$ => action$.pipe(
   switchMap((action) => {
     const { payload: { payload } } = action;
     const { token, user } = payload as { token: string; user: User };
-    const now = new Date();
+    const createdAt = (new Date()).toISOString();
     socket$.next({
       type: 'SUBSCRIPTION',
-      payload: {
-        token,
-        user,
-        createdAt: now.toISOString(),
-      },
+      payload: { token, user, createdAt },
     });
     return empty();
   }),
@@ -65,6 +62,18 @@ export const sendMessageEpic: Ep = (action$, state$) => action$.pipe(
     socket$.next({
       type: 'MESSAGE',
       payload: selectMessageToSend(payload)(state),
+    });
+    return empty();
+  }),
+);
+
+export const sendEditedMessageEpic: Ep = action$ => action$.pipe(
+  filter(isActionOf([sendEditedMessage])),
+  switchMap(action => {
+    const { payload } = action;
+    socket$.next({
+      type: 'MESSAGE',
+      payload: payload,
     });
     return empty();
   }),

@@ -22,6 +22,8 @@ declare module 'SCModels' {
   }
   export interface Message extends MessageBase {
     meta: MessageMeta;
+    isBOT?: boolean;
+    isEditable?: boolean;
   }
   export interface SystemMessage extends MessageBase {
     meta: SystemMessageMeta;

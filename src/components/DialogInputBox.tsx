@@ -20,9 +20,11 @@ function DialogInputBox({
     values: FormValues,
     actions: FormikHelpers<FormValues>,
   ) {
-    onSend(values.content);
+    const { content } = values;
+    onSend(content);
     actions.resetForm();
   }
+
   return (
     <div className="DialogInputBox">
       <Formik

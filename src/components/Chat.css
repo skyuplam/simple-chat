@@ -6,4 +6,5 @@
 .ChatMessages {
   height: calc(100% - 65px + 1rem);
   overflow: scroll;
+  margin-right: -0.8rem;
 }
