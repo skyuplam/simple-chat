@@ -58,6 +58,7 @@
     "rxjs": "^6.5.2",
     "tslib": "^1.10.0",
     "typesafe-actions": "^4.4.2",
+    "universal-cookie": "^4.0.2",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
