@@ -14,3 +14,10 @@ export const API_ENDPOINT = [
   [API_PORTOCOL, [API_HOST, API_PORT].join(':')].join('://'),
   '/api',
 ].join('');
+
+export const COOKIE_KEY = process.env.COOKIE_KEY || 'token';
+
+export const jwtConfig = {
+  secret: SECRET_KEY,
+  algorithm: 'HS512',
+};

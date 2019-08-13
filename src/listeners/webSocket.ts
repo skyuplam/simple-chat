@@ -1,16 +1,20 @@
 import {
   webSocketListener, WsConnectionEffect, WebSocketConnectionError,
 } from '@marblejs/websockets';
-import { HttpStatus } from '@marblejs/core';
+import { HttpStatus, use } from '@marblejs/core';
 import { mergeMap } from 'rxjs/operators';
 import { iif, throwError, of } from 'rxjs';
 
-import { logger$ } from './middlewares/ws.logger';
-import * as messages$ from './effects/messages';
+import { logger$ } from '../middlewares/wsLogger';
+import * as messages$ from '../effects/wsMessages';
+import { authorize$ } from '../middlewares/auth';
+import { jwtConfig } from '../config';
 
 
 const connection$: WsConnectionEffect = req$ =>
   req$.pipe(
+    // @ts-ignore
+    use(authorize$(jwtConfig)),
     mergeMap(req => iif(
       () => req.headers.upgrade !== 'websocket',
       throwError(new WebSocketConnectionError(

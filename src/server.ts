@@ -5,12 +5,10 @@ import { mapToServer } from '@marblejs/websockets';
 import { merge } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 
-import httpListener from './http.listener';
-import webSocketListener from './webSocket.listener';
-import { WebSocketServerToken } from './tokens';
-import {
-  API_PORT, API_HOST,
-} from './config';
+import httpListener from './listeners/http';
+import webSocketListener from './listeners/webSocket';
+import { WebSocketServerToken } from './utils/tokens';
+import { API_PORT, API_HOST } from './config';
 
 
 const upgrade$: HttpServerEffect = (event$, _, { ask }) =>

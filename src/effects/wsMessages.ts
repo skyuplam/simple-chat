@@ -33,10 +33,10 @@ export const systemMessages$: WsEffect = event$ =>
     matchEvent('SYSTEM'),
   );
 
-export const subscription$: WsEffect = (event$, client$) =>
+export const subscription$: WsEffect = (event$, client) =>
   event$.pipe(
     matchEvent('SUBSCRIPTION'),
-    broadcast(client$, (event) => {
+    broadcast(client, (event) => {
       const { user: { name, id: userId } } = event.payload as { user: User };
       setUserOnline(userId, true);
       const msg = subscriptionMsg(name);
@@ -45,10 +45,10 @@ export const subscription$: WsEffect = (event$, client$) =>
     }),
   );
 
-export const unsubscription$: WsEffect = (event$, client$) =>
+export const unsubscription$: WsEffect = (event$, client) =>
   event$.pipe(
     matchEvent('UNSUBSCRIPTION'),
-    broadcast(client$, (event) => {
+    broadcast(client, (event) => {
       const { user: { name, id: userId } } = event.payload as { user: User };
       setUserOnline(userId, false);
       const msg = unsubscriptionMsg(name);
@@ -56,10 +56,10 @@ export const unsubscription$: WsEffect = (event$, client$) =>
       return msg; }),
   );
 
-export const messages$: WsEffect = (event$, client$) =>
+export const messages$: WsEffect = (event$, client) =>
   event$.pipe(
     matchEvent('MESSAGE'),
-    broadcast(client$, (event) => {
+    broadcast(client, (event) => {
       return {
         type: 'MESSAGE',
         payload: event.payload,
