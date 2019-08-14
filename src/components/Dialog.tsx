@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react';
 import { Message } from 'SCModels';
 import dayjs from 'dayjs';
@@ -5,9 +6,15 @@ import cn from 'clsx';
 import { Formik, Form, FormikHelpers } from 'formik';
 import Icon from '@mdi/react';
 import { mdiSquareEditOutline, mdiCheck, mdiClose } from '@mdi/js';
+import Linkify from 'linkify-it';
+import { reduce, initial, last } from 'lodash';
 import Button from './Button';
 import TextArea from './TextArea';
+import Link from './Link';
 import './Dialog.css';
+
+const linkify = new Linkify();
+
 
 interface Values {
   content: string;
@@ -33,6 +40,29 @@ function Dialog({ msg, sendEditedMsg }: Props) {
   // Check if the msg is created at the current day
   // Prepend with date, e.g. 8-13 12:03, otherwise only show the time
   const dateformat = dayjs().isSame(datetime, 'day') ? 'H:mm' : 'M-D H:mm';
+
+  // Linkify message content if necessary
+  const content = !linkify.pretest(msg.content) ? msg.content
+    : reduce(linkify.match(msg.content), (accm, url, idx, urls) => {
+      const lastItem = last(accm) || '';
+      const initialItems = initial(accm);
+
+      // Offset index
+      const idxEndFirst = idx > 0
+        ? url.index - urls[idx - 1].lastIndex : url.index;
+      const idxEndLast = idx > 0
+        ? url.lastIndex - urls[idx - 1].lastIndex : url.lastIndex;
+
+      const firstPart = lastItem.substring(0, idxEndFirst);
+      const between = (
+        <Link key={[url.url, idx].join('_')} href={url.url} target="_blank">
+          {url.text}
+        </Link>
+      );
+      const lastPart = lastItem.substring(idxEndLast);
+
+      return [...initialItems, firstPart, between, lastPart];
+    }, [msg.content] as any[]);
 
   function handleEdit() {
     setEditing(!isEditing);
@@ -62,7 +92,7 @@ function Dialog({ msg, sendEditedMsg }: Props) {
 
   const msgContent = (
     <p className={cn('DialogContent', { DialogBOT: msg.isBOT })}>
-      {msg.content}
+      {content}
     </p>
   );
 
