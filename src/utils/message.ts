@@ -1,5 +1,5 @@
 import cuid from 'cuid';
-import { getUsers } from '../utils/dbHelpers';
+import { getUsers, User } from '../utils/dbHelpers';
 
 
 interface MessageLike {
@@ -10,14 +10,14 @@ interface MessageLike {
   };
 }
 
-const systemMsg = (content: string) => ({
+const systemMsg = (content: string, users?: User[]) => ({
   type: 'SYSTEM',
   payload: {
     id: cuid(),
     content,
     meta: {
       createdAt: (new Date()).toISOString(),
-      users: getUsers(),
+      users: users || getUsers(),
     },
   }
 });
@@ -39,7 +39,7 @@ export const subscriptionMsg = (name: string) => {
   return systemMsg(content);
 };
 
-export const unsubscriptionMsg = (name: string) => {
+export const unsubscriptionMsg = (name: string, users: User[]) => {
   const content = `${name} left.`;
-  return systemMsg(content);
+  return systemMsg(content, users);
 };

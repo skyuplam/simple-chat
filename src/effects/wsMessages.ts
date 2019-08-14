@@ -20,9 +20,10 @@ export const unsubscription$: WsEffect = (event$, client) =>
   event$.pipe(
     matchEvent('UNSUBSCRIPTION'),
     broadcast(client, (event) => {
-      const { user: { name, id: userId } } = event.payload as { user: User };
+      const { user } = event.payload as { user: User };
+      const { name, id: userId } = user;
       setUserOnline(userId, false);
-      const msg = unsubscriptionMsg(name);
+      const msg = unsubscriptionMsg(name, [user]);
       // TODO: Cache the message
       return msg; }),
   );

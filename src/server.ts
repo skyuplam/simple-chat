@@ -53,8 +53,9 @@ const handleServerBrokenConnections = (
       );
       if (!client) {
         // Broadcast Unsubscription message
-        setUserOnline((user as User).id, false);
-        server.sendBroadcastResponse(unsubscriptionMsg(user.name));
+        const offlineUser = user as User;
+        setUserOnline(offlineUser.id, false);
+        server.sendBroadcastResponse(unsubscriptionMsg(user.name, [offlineUser]));
       }
     });
   }),
