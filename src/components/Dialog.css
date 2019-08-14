@@ -40,3 +40,44 @@
 .DialogEditBtn:focus {
   box-shadow: none;
 }
+
+.DialogDeleted {
+  opacity: 0.27;
+  text-decoration: line-through;
+  font-style: italic;
+}
+
+.DialogModalContainer {
+  position: absolute;
+  top: 28%;
+  bottom: 28%;
+  left: 10%;
+  right: 10%;
+  background: #FFF;
+  border: 1px solid #EBEBEB;
+  border-radius: 4px;
+  padding: 1rem;
+  box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 3px 1px -2px rgba(0,0,0,0.12);
+  outline: 'none';
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+}
+
+.DialogModalHeading {
+  text-align: center;
+  margin: 1rem 0;
+  font-weight: bold;
+}
+
+.DialogRef {
+  color: #959ba4;
+  font-style: italic;
+  height: 10rem;
+  overflow: scroll;
+}
+
+.DialogModalActions {
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 0 1rem;
+}

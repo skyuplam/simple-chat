@@ -18,7 +18,7 @@ export const selectOrderedMessages = createSelector(
     msg => ({
       ...msg,
       isBOT: msg.meta.userId === 'user0000',
-      isEditable: msg.meta.userId === activeUserId,
+      isEditable: msg.meta.userId === activeUserId && !msg.meta.deletedAt,
       meta: { ...msg.meta, user: get(users, msg.meta.userId) },
     }),
   ),

@@ -10,6 +10,7 @@ declare module 'SCModels' {
   }
   export interface MessageMeta extends Meta {
     editedAt?: string;
+    deletedAt?: string;
     userId: string;
     user?: User;
   }

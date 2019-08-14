@@ -6,9 +6,10 @@ interface Props {
   isOpen: boolean;
   onRequestClose: () => void;
   children: React.ReactNode;
+  className?: string;
 }
 function Modal({
-  children, isOpen, onRequestClose,
+  children, isOpen, onRequestClose, className,
 }: Props) {
   const [el, setEl] = useState();
   useEffect(() => {
@@ -24,6 +25,7 @@ function Modal({
       onRequestClose={onRequestClose}
       ariaHideApp={false}
       appElement={el}
+      className={className}
     >
       {children}
     </ReactModal>
