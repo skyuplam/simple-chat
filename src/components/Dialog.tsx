@@ -6,15 +6,13 @@ import cn from 'clsx';
 import { Formik, Form, FormikHelpers } from 'formik';
 import Icon from '@mdi/react';
 import { mdiSquareEditOutline, mdiCheck, mdiClose, mdiDelete } from '@mdi/js';
-import Linkify from 'linkify-it';
-import { reduce, initial, last } from 'lodash';
+import { Match } from 'linkify-it';
+import { linkifyString } from '../utils/string';
 import Button from './Button';
 import TextArea from './TextArea';
 import Link from './Link';
 import Modal from './Modal';
 import './Dialog.css';
-
-const linkify = new Linkify();
 
 
 interface Values {
@@ -38,34 +36,22 @@ function Dialog({ msg, sendEditedMsg }: Props) {
     }
   }, []);
 
-  const datetime = dayjs(msg.meta.deletedAt || msg.meta.editedAt || msg.meta.createdAt);
+  const datetime = dayjs(
+    msg.meta.deletedAt || msg.meta.editedAt || msg.meta.createdAt);
   // Check if the msg is created at the current day
   // Prepend with date, e.g. 8-13 12:03, otherwise only show the time
   const dateformat = dayjs().isSame(datetime, 'day') ? 'H:mm' : 'M-D H:mm';
 
   // Linkify message content if necessary
-  const content = !linkify.pretest(msg.content)
-    ? msg.content
-    : reduce(linkify.match(msg.content), (accm, url, idx, urls) => {
-      const lastItem = last(accm) || '';
-      const initialItems = initial(accm);
-
-      // Offset index
-      const idxEndFirst = idx > 0
-        ? url.index - urls[idx - 1].lastIndex : url.index;
-      const idxEndLast = idx > 0
-        ? url.lastIndex - urls[idx - 1].lastIndex : url.lastIndex;
-
-      const firstPart = lastItem.substring(0, idxEndFirst);
-      const between = (
-        <Link key={[url.url, idx].join('_')} href={url.url} target="_blank">
-          {url.text}
-        </Link>
-      );
-      const lastPart = lastItem.substring(idxEndLast);
-
-      return [...initialItems, firstPart, between, lastPart];
-    }, [msg.content] as any[]);
+  const toLink = (match: Match) => (
+    <Link
+      key={[match.url, match.index].join('_')}
+      href={match.url}
+    >
+      {match.text}
+    </Link>
+  );
+  const content = linkifyString(msg.content, toLink);
 
   function handleEdit() {
     setEditing(!isEditing);
