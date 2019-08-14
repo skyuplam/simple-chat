@@ -71,6 +71,11 @@ function Dialog({ msg, sendEditedMsg }: Props) {
     setEditing(!isEditing);
   }
 
+  function handleNotEditing() {
+    setEditing(false);
+    setValid(false);
+  }
+
   function handleOnSubmit(values: Values, actions: FormikHelpers<Values>) {
     const { content } = values;
     sendEditedMsg({
@@ -106,8 +111,8 @@ function Dialog({ msg, sendEditedMsg }: Props) {
 
   function handleValidation(values: Values) {
     const { content } = values;
-    setValid(Boolean(content));
-    return isValid ? {} : { content: 'Empty message!' };
+    setValid(Boolean(content.trim()));
+    return content.trim() ? {} : { content: 'Empty message!' };
   }
 
   const msgContent = (
@@ -158,7 +163,7 @@ function Dialog({ msg, sendEditedMsg }: Props) {
         key="no"
         className="DialogIconBtn"
         type="button"
-        onClick={handleEdit}
+        onClick={handleNotEditing}
       >
         <Icon size={1} path={mdiClose} />
       </Button>

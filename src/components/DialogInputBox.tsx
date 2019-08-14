@@ -40,7 +40,7 @@ function DialogInputBox({
               endAdornment={
                 <Button
                   type="submit"
-                  disabled={!values.content}
+                  disabled={!values.content.trim()}
                 >
                   <Icon size={1} path={mdiKeyboardReturn} />
                 </Button>
