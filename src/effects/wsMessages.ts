@@ -1,37 +1,8 @@
 import { WsEffect, broadcast } from '@marblejs/websockets';
 import { matchEvent } from '@marblejs/core';
-import cuid from 'cuid';
-import {
-  getUsers, setUserOnline, User,
-} from '../utils/dbHelpers';
+import { setUserOnline, User } from '../utils/dbHelpers';
+import { subscriptionMsg, unsubscriptionMsg } from '../utils/message';
 
-
-const systemMsg = (content: string) => ({
-  type: 'SYSTEM',
-  payload: {
-    id: cuid(),
-    content,
-    meta: {
-      createdAt: (new Date()).toISOString(),
-      users: getUsers(),
-    },
-  }
-});
-
-const subscriptionMsg = (name: string) => {
-  const content = `${name} joined.`;
-  return systemMsg(content);
-};
-
-const unsubscriptionMsg = (name: string) => {
-  const content = `${name} left.`;
-  return systemMsg(content);
-};
-
-export const systemMessages$: WsEffect = event$ =>
-  event$.pipe(
-    matchEvent('SYSTEM'),
-  );
 
 export const subscription$: WsEffect = (event$, client) =>
   event$.pipe(

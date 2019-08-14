@@ -2,22 +2,11 @@ import { createReducer } from 'typesafe-actions';
 import produce from 'immer';
 import { Message, SystemMessage } from 'SCModels';
 import { receiveSystemMessage, receiveMessage } from './actions';
+import { toBOTMessage } from '../../utils/message';
 
 
 type Messages = Record<string, Message>;
 const initialMessagesState: Messages = {};
-
-const systemToMessage = (msg: SystemMessage) => {
-  const { id, content, meta } = msg;
-  return {
-    id,
-    content,
-    meta: {
-      createdAt: meta.createdAt,
-      userId: 'user0000',
-    }
-  };
-};
 
 const messagesReducer = createReducer(initialMessagesState)
   .handleAction(
@@ -25,7 +14,7 @@ const messagesReducer = createReducer(initialMessagesState)
     (state, action) => produce(state, draft => {
       const { payload } = action;
       const message = payload as SystemMessage;
-      draft[message.id] = systemToMessage(message);
+      draft[message.id] = toBOTMessage(message);
     }),
   ).handleAction(
     receiveMessage,
