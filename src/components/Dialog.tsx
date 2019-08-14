@@ -79,9 +79,9 @@ function Dialog({ msg, sendEditedMsg }: Props) {
         editedAt: (new Date).toISOString(),
       },
     });
-    setEditing(false);
     setValid(false);
     actions.resetForm();
+    setEditing(false);
   }
 
   function handleValidation(values: Values) {
