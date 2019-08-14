@@ -36,6 +36,7 @@ function DialogInputBox({
             <Input
               placeholder="Message"
               name="content"
+              autoComplete="off"
               endAdornment={
                 <Button
                   type="submit"
