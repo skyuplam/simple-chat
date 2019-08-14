@@ -3,7 +3,8 @@ import cn from 'clsx';
 import './Link.css';
 
 
-export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>{
+type Anchor = React.AnchorHTMLAttributes<HTMLAnchorElement>;
+export interface LinkProps extends Anchor {
   href: string;
   children: React.ReactNode;
   className?: string;

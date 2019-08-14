@@ -7,6 +7,9 @@ import { Formik, Form, FormikHelpers } from 'formik';
 import Icon from '@mdi/react';
 import { mdiSquareEditOutline, mdiCheck, mdiClose, mdiDelete } from '@mdi/js';
 import { Match } from 'linkify-it';
+// @ts-ignore
+import ReactTinyLink from 'react-tiny-link';
+
 import { linkifyString } from '../utils/string';
 import Button from './Button';
 import TextArea from './TextArea';
@@ -27,6 +30,7 @@ function Dialog({ msg, sendEditedMsg }: Props) {
   const [isEditing, setEditing] = useState(false);
   const [isValid, setValid] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState('');
 
   // Scroll into this view when mounted
   useEffect(() => {
@@ -42,11 +46,17 @@ function Dialog({ msg, sendEditedMsg }: Props) {
   // Prepend with date, e.g. 8-13 12:03, otherwise only show the time
   const dateformat = dayjs().isSame(datetime, 'day') ? 'H:mm' : 'M-D H:mm';
 
+  const handleMouseOver = (match: Match) => () => { setPreviewUrl(match.url); };
+  const handleMouseLeave = () => { setPreviewUrl(''); };
+
   // Linkify message content if necessary
   const toLink = (match: Match) => (
     <Link
       key={[match.url, match.index].join('_')}
       href={match.url}
+      rel="noopener noreferrer"
+      onMouseOver={handleMouseOver(match)}
+      onMouseLeave={handleMouseLeave}
     >
       {match.text}
     </Link>
@@ -191,6 +201,7 @@ function Dialog({ msg, sendEditedMsg }: Props) {
         {msg.isEditable && actions}
       </div>
       {Content}
+      {previewUrl && (<ReactTinyLink url={previewUrl} />)}
       <Modal
         isOpen={isDeleting}
         onRequestClose={handleDeleting}
