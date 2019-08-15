@@ -3,7 +3,7 @@ import { empty } from 'rxjs';
 import {
   filter, switchMap, map, takeUntil, retryWhen, delay, withLatestFrom,
 } from 'rxjs/operators';
-import { ChatEvent, User } from 'SCModels';
+import { ChatEvent } from 'SCModels';
 import webSocket from '../../utils/webSocketObservable';
 import webSocketCreator from '../../utils/webSocket';
 import {
@@ -12,7 +12,7 @@ import {
   sendMessage,
   sendEditedMessage,
 } from './actions';
-import { createSession, validateSession, storeCookie } from '../auth/actions';
+import { validateSession, storeCookie } from '../auth/actions';
 import { API_HOST, API_PORT } from '../../config';
 import { selectMessageToSend } from './selectors';
 
@@ -37,21 +37,6 @@ export const messageStreamEpic: Ep = action$ => action$.pipe(
       delay(1000),
     )),
   )),
-);
-
-export const sendSubscribeMsg: Ep = action$ => action$.pipe(
-  filter(isActionOf([createSession.success, validateSession.success])),
-  delay(1000),
-  switchMap((action) => {
-    const { payload: { payload } } = action;
-    const { token, user } = payload as { token: string; user: User };
-    const createdAt = (new Date()).toISOString();
-    socket$.next({
-      type: 'SUBSCRIPTION',
-      payload: { token, user, createdAt },
-    });
-    return empty();
-  }),
 );
 
 export const sendMessageEpic: Ep = (action$, state$) => action$.pipe(

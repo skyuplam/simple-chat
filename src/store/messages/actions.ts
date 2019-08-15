@@ -19,19 +19,9 @@ export const sendEditedMessage = createAction(
   action => (msg: Message) => action(msg),
 );
 
-export const startMessageStream = createAction(
-  '@sc/messages/START_MESSAGE_STREAM',
-  action => (user: User) => action({ user }),
-);
-
 export const stopMessageStream = createAction(
   '@sc/messages/STOP_MESSAGE_STREAM',
   action => (user: User) => action({ user }),
-);
-
-export const messageStreamFailure = createAction(
-  '@sc/messages/MESSAGE_STREAM_FAILURE',
-  action => ({ error }: ChatErrorEvent) => action(error),
 );
 
 export const receiveMessage = createAction(

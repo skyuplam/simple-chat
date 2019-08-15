@@ -13,7 +13,7 @@ import webSocketListener from './listeners/webSocket';
 import { WebSocketServerToken } from './utils/tokens';
 import { API_PORT, API_HOST } from './config';
 import { User, setUserOnline, getUsers } from './utils/dbHelpers';
-import { unsubscriptionMsg } from './utils/message';
+import { unsubscriptionMsg, subscriptionMsg } from './utils/message';
 
 
 interface WsClient extends MarbleWebSocketClient { user: User }
@@ -64,7 +64,9 @@ const handleServerBrokenConnections = (
 const handleWsServerConnectionEvents = (wsServer: MarbleWebSocketServer) => {
   wsServer.on('connection', (ws: MarbleWebSocketClient, request: HttpRequest) => {
     // Add user to client's properties
-    extendClient(request.user)(ws);
+    const client = extendClient(request.user)(ws);
+    setUserOnline(client.user.id, true);
+    client.sendBroadcastResponse(subscriptionMsg(client.user.name));
   });
 
   handleServerBrokenConnections(wsServer).subscribe();
