@@ -36,3 +36,23 @@ $ yarn start
 # Input the name in the [mock db](src/db.ts), e.g. Terrence Lam
 # to login and join the meeting!
 ```
+
+## Src Organization
+
+```sh
+src
+├── client.ts   # Client Entry point
+├── components  # React components
+├── config.ts   # Project config file
+├── containers  # React-redux state and action containers
+├── db.ts       # Fake DB
+├── effects     # Server Effects
+├── hooks       # Custom react hooks
+├── html        # HTML file containers
+├── listeners   # Server listeners, e.g. HTTP and WebSocket
+├── middlewares # Server middlewares
+├── server.ts   # Server entry point
+├── services    # API services for client fetching
+├── store       # Redux store and related
+└── utils       # Utilities folder for common utilities
+```
