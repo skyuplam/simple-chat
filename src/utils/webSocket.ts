@@ -1,3 +1,6 @@
+/**
+ * Get browser WebSocket object for compatibility
+ */
 import { head } from 'lodash';
 
 

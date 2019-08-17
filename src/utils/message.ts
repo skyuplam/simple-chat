@@ -1,3 +1,6 @@
+/**
+ * Message utilities for creating System Message
+ */
 import cuid from 'cuid';
 import { getUsers, User } from '../utils/dbHelpers';
 
@@ -22,6 +25,8 @@ const systemMsg = (content: string, users?: User[]) => ({
   }
 });
 
+// Convert a [[MessageLike]] message to a [[Message]]
+// Use hard-code useId as BOT user for simplicity
 export const toBOTMessage = (msg: MessageLike) => {
   const { id, content, meta } = msg;
   return {

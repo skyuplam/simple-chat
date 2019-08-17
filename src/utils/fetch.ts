@@ -1,9 +1,14 @@
+/**
+ * Use `whatwg-fetch` for consistent fetch API
+ */
 import 'whatwg-fetch';
 import { includes } from './string';
 import { pick } from 'lodash';
 import { FetchFailure, FetchSuccess } from 'SCModels';
 
-
+/**
+ * Parse the fetch response based on the content-type
+ */
 export async function parseResponse(response: Response) {
   const contentType = response.headers.get('Content-Type') || '';
   const includesJson = includes('json');
@@ -23,6 +28,9 @@ export async function parseResponse(response: Response) {
   return response;
 }
 
+/**
+ * Standardize fetch request and response
+ */
 async function fetchAPI(
   url: string | Request,
   opts: RequestInit = {},

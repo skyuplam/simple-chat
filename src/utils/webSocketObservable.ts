@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/**
+ * A implementation of WebSocket Observable
+ */
 import {
   Observable, Subscriber, NextObserver, ReplaySubject, Subscription,
 } from 'rxjs';

@@ -1,9 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/**
+ * String Utilities for common string operations
+ */
 import Linkify, { Match } from 'linkify-it';
 import { reduce, initial, last } from 'lodash';
 
-const linkify = new Linkify();
 
+/**
+ * Check if a string contains the `searchString`
+ *
+ * @param searchString a string to look for
+ * @param target target string
+ *
+ * @returns boolean true if the `target` includes the `searchString`
+ */
 export const includes = (
   searchString: string,
 ) => (target: string = '') => {
@@ -11,6 +21,13 @@ export const includes = (
   const s = searchString.toLowerCase();
   return t.indexOf(s) !== -1;
 };
+
+/**
+ * Linkify a string using
+ * [linkify-it'(https://github.com/markdown-it/linkify-it)
+ */
+// Instantiate linkify
+const linkify = new Linkify();
 
 export type ReplaceWith = (match: Match) => any;
 const defaultReplaceWith = (match: Match) => match.text;

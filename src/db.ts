@@ -1,3 +1,7 @@
+/**
+ * Fake database
+ */
+
 const db = {
   users: {
     user0001: {

@@ -1,4 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/**
+ * Authorization Middleware for HTTP/WebSocket
+ * Verify the request cookie contains a valid JWT token
+ */
 import {
   AuthorizeMiddlewareConfig, verifyToken$,
 } from '@marblejs/middleware-jwt';
@@ -13,6 +17,9 @@ import { COOKIE_KEY } from '../config';
 import { isAuthorized } from '../utils/dbHelpers';
 
 
+/**
+ * Parse Cookie from request header using `universal-cookie`
+ */
 export const parseCookies = (req: HttpRequest) => {
   const cookies = new Cookies(req.headers.cookie);
   const token = cookies.get(COOKIE_KEY);
@@ -22,9 +29,15 @@ export const parseCookies = (req: HttpRequest) => {
   throw new Error();
 };
 
+/**
+ * Assign the verify content, i.e. user info, to request object
+ */
 export const assignPayloadToRequest = (req: HttpRequest) =>
   (payload: object) => { req.user = payload; };
 
+/**
+ * Verify the payload returned from JWT verifier
+ */
 export const verifyPayload$ = (payload: any) => of(payload).pipe(
   flatMap((payload) => iif(
     () => isAuthorized(payload),
@@ -34,6 +47,11 @@ export const verifyPayload$ = (payload: any) => of(payload).pipe(
 );
 
 
+/**
+ * Authorization middleware
+ *
+ * @param config See [[AuthorizeMiddlewareConfig]] for details
+ */
 export const authorize$ = (
   config: AuthorizeMiddlewareConfig,
 ): HttpMiddlewareEffect => req$ =>

@@ -1,4 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/**
+ * This is the starting point where a marblejs server starts and listens
+ * traffics.
+ */
+
 import {
   createServer, bindTo, HttpServerEffect, matchEvent, ServerEvent, HttpRequest,
 } from '@marblejs/core';
@@ -16,11 +21,24 @@ import { User, setUserOnline, getUsers } from './utils/dbHelpers';
 import { unsubscriptionMsg, subscriptionMsg } from './utils/message';
 
 
+/**
+ * An interface to extend the WebSocket client with user attribute
+ */
 interface WsClient extends MarbleWebSocketClient { user: User }
 
+/**
+ * Heart Beat interval defined according to (marblejs)[https://github.com/marblejs/marble/blob/10178ed9493cc22cea40e0bf6680c947fd94f42c/packages/websockets/src/listener/websocket.helper.ts#L29]
+ */
 export const HEART_BEAT_INTERVAL = 10 * 1000;
 export const HEART_BEAT_TERMINATE_INTERVAL = HEART_BEAT_INTERVAL + 1000;
 
+/**
+ * Server event - `upgrade` effect
+ *
+ * Upgrade the current connection to WebSocket.
+ *
+ * Please refer to [[HttpServerEffect]] for the details
+ */
 const upgrade$: HttpServerEffect = (event$, _, { ask }) =>
   event$.pipe(
     matchEvent(ServerEvent.upgrade),
@@ -30,13 +48,21 @@ const upgrade$: HttpServerEffect = (event$, _, { ask }) =>
     }),
   );
 
-
+/**
+ * A utility function to extend the WebSocket client
+ */
 const extendClient = (user: User) => (client: MarbleWebSocketClient) => {
   const ws = client as WsClient;
   ws.user = user;
   return ws;
 };
 
+/**
+ * A Function to create an interval observable to watch broken connection events
+ *
+ * @param server WebSocket server
+ * @param scheduler for dependency injection for testing purpose
+ */
 const handleServerBrokenConnections = (
   server: MarbleWebSocketServer,
   scheduler?: SchedulerLike,
@@ -61,6 +87,9 @@ const handleServerBrokenConnections = (
   }),
 );
 
+/**
+ * Handle WebSocket Server Connection events
+ */
 const handleWsServerConnectionEvents = (wsServer: MarbleWebSocketServer) => {
   wsServer.on('connection', (ws: MarbleWebSocketClient, request: HttpRequest) => {
     // Add user to client's properties
@@ -72,6 +101,9 @@ const handleWsServerConnectionEvents = (wsServer: MarbleWebSocketServer) => {
   handleServerBrokenConnections(wsServer).subscribe();
 };
 
+/**
+ * Handle Server events
+ */
 const listening$: HttpServerEffect = (event$, _, { ask }) =>
   event$.pipe(
     matchEvent(ServerEvent.listening),
@@ -88,6 +120,9 @@ const listening$: HttpServerEffect = (event$, _, { ask }) =>
     }),
   );
 
+/**
+ * Create a HTTP server
+ */
 export const server = createServer({
   port: API_PORT,
   hostname: API_HOST,
@@ -101,4 +136,5 @@ export const server = createServer({
   ),
 });
 
+// Start the server
 server.run();

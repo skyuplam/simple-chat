@@ -1,3 +1,6 @@
+/**
+ * Client entry point
+ */
 // This must be the first line in src/index.ts
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
