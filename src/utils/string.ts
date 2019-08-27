@@ -16,7 +16,7 @@ import { reduce, initial, last } from 'lodash';
  */
 export const includes = (
   searchString: string,
-) => (target: string = '') => {
+) => (target = '') => {
   const t = target.toLowerCase();
   const s = searchString.toLowerCase();
   return t.indexOf(s) !== -1;
