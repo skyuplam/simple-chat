@@ -47,7 +47,7 @@
     "formik": "^2.0.1-rc.13",
     "immer": "^3.2.0",
     "linkify-it": "^2.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "react": "^16.9.0",
     "react-app-polyfill": "^1.0.2",
     "react-dom": "^16.9.0",
